@@ -23,6 +23,7 @@ func main() {
 	// var nome string = "Fellipe"
 
 	fmt.Println("nome ", nome)
+	fmt.Printf("nome %s e %d ", nome, idade)
 	fmt.Println("idade", idade)
 	fmt.Println("temperatura", temperatura)
 	fmt.Println("umidade", umidade)
