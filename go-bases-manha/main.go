@@ -28,4 +28,6 @@ func main() {
 	fmt.Println("temperatura", temperatura)
 	fmt.Println("umidade", umidade)
 	fmt.Println("pressaoAtimosferica", pressaoAtimosferica)
+
+	Test()
 }
