@@ -27,7 +27,7 @@ func lerArquivos(caminho string, produtos []produto) error {
 
 	file, err := os.OpenFile(caminho, os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
-		return fmt.Errorf("Erro ao abrir o arquivo: %w", err)
+		return fmt.Errorf("erro ao abrir o arquivo: %w", err)
 	}
 	defer file.Close()
 
