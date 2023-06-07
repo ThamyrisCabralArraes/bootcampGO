@@ -3,6 +3,7 @@ package products
 type Service interface {
 	GetAll() ([]Product, error)
 	Store(nome, tipo string, quantidade int, preco float64) (Product, error)
+	Update(id int, nome, tipo string, quantidade int, preco float64) (Product, error)
 }
 
 type service struct {
@@ -36,4 +37,8 @@ func (s *service) Store(nome, tipo string, quantidade int, preco float64) (Produ
 		return Product{}, err
 	}
 	return product, nil
+}
+
+func (s *service) Update(id int, nome, tipo string, quantidade int, preco float64) (Product, error) {
+	return s.repository.Update(id, nome, tipo, quantidade, preco)
 }

@@ -1,6 +1,10 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/thamyriscabralarraes/bootcampGO/exemplos/go-web-II/cmd/server/handler"
+	"github.com/thamyriscabralarraes/bootcampGO/exemplos/go-web-II/internal/products"
+)
 
 type request struct {
 	ID         int     `json:"id"`
@@ -37,8 +41,14 @@ func Salvar() gin.HandlerFunc {
 }
 
 func main() {
+	repo := products.NewRepository()
+	service := products.NewService(repo)
+	p := handler.NewProduct(service)
+
 	r := gin.Default()
-	pr := r.Group("/produtos")
-	pr.POST("/salvar", Salvar())
+	pr := r.Group("/products")
+	pr.POST("/", p.Store())
+	pr.GET("/", p.GetAll())
+	pr.PUT("/:id", p.Update())
 	r.Run()
 }
