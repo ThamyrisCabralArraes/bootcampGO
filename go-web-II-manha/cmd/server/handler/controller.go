@@ -3,6 +3,7 @@ package handler
 import (
 	"GO-WEB-II-MANHA/internal/db"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -80,5 +81,40 @@ func (c *Logins) Store() gin.HandlerFunc {
 
 		// login = append(login, req)
 		ctx.JSON(200, l)
+	}
+}
+
+func (l *Logins) Update() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		token := ctx.GetHeader("token")
+		if token != os.Getenv("TOKEN") {
+			ctx.JSON(401, gin.H{"error": "token inválido"})
+			return
+		}
+		id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+		if err != nil {
+			ctx.JSON(400, gin.H{"error": "invalid ID"})
+			return
+		}
+		var req request
+		if err := ctx.ShouldBindJSON(&req); err != nil {
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		if req.Nome == "" {
+			ctx.JSON(400, gin.H{"error": "O nome do produto é obrigatório"})
+			return
+		}
+		if req.Senha == 0 {
+			ctx.JSON(400, gin.H{"error": "O tipo do produto é obrigatório"})
+			return
+		}
+
+		lo, err := l.service.Update(int(id), req.Nome, req.Senha)
+		if err != nil {
+			ctx.JSON(404, gin.H{"error": err.Error()})
+			return
+		}
+		ctx.JSON(200, lo)
 	}
 }

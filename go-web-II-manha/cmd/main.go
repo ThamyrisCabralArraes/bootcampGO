@@ -24,5 +24,6 @@ func main() {
 
 	pr.POST("/salvar", l.Store())
 	pr.GET("/", l.GetAll())
+	pr.PUT(":/id", l.Update())
 	r.Run()
 }
