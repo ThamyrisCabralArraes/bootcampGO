@@ -1,13 +1,13 @@
 package main
 
 import (
+	"GO-WEB-II/cmd/server/handler"
+	"GO-WEB-II/internal/products"
 	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/thamyriscabralarraes/bootcampGO/exemplos/go-web-II/cmd/server/handler"
-	"github.com/thamyriscabralarraes/bootcampGO/exemplos/go-web-II/internal/products"
 )
 
 // 1 maneira de fazer o POST

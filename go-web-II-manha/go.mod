@@ -1,4 +1,4 @@
-module github.com/thamyriscabralarraes/bootcampGO
+module GO-WEB-II-MANHA
 
 go 1.20
 

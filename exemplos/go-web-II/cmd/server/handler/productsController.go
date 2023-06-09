@@ -1,11 +1,11 @@
 package handler
 
 import (
+	"GO-WEB-II/internal/products"
 	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/thamyriscabralarraes/bootcampGO/exemplos/go-web-II/internal/products"
 )
 
 type request struct {
