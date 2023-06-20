@@ -4,7 +4,6 @@ import (
 	"GO-WEB-II/cmd/server/handler"
 	"GO-WEB-II/internal/products"
 	"log"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -50,8 +49,6 @@ func main() {
 	if err != nil {
 		log.Fatal("error ao carregar o arquivo env")
 	}
-	usuario := os.Getenv("MY_USER")
-	password := os.Getenv("MY_PASS")
 
 	repo := products.NewRepository()
 	service := products.NewService(repo)
