@@ -16,8 +16,8 @@ type mockStore struct {
 func (m *mockStore) Read(v interface{}) error {
 	m.callingRead = true
 	produtos := []repository.Produto{
-		{1, "Tomate", "Vermelho", 4.99, 4, "AF333", true, "20231010"},
-		{2, "Camarão", "Laranja", 100.99, 5, "AERQW", true, "20230511"},
+		{1, "Aspirador", "Branco", 4.99, 4, "AF333", true, "20231010"},
+		{2, "Ventilador", "Vermelho", 100.99, 5, "AERQW", true, "20230511"},
 		{3, "Before Update", "Preto", 50.00, 2, "A123A", true, "20231008"},
 	}
 	data, ok := v.(*[]repository.Produto)
@@ -39,8 +39,8 @@ func TestGetAll(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, result, 3)
 	assert.Equal(t, 1, result[0].Id)
-	assert.Equal(t, "Tomate", result[0].Nome)
-	assert.Equal(t, "Vermelho", result[0].Cor)
+	assert.Equal(t, "Aspirador", result[0].Nome)
+	assert.Equal(t, "Branco", result[0].Cor)
 	assert.Equal(t, 4.99, result[0].Preco)
 	assert.Equal(t, 4, result[0].Estoque)
 	assert.Equal(t, "AF333", result[0].Codigo)
@@ -48,8 +48,8 @@ func TestGetAll(t *testing.T) {
 	assert.Equal(t, "20231010", result[0].DataCriacao)
 
 	assert.Equal(t, 2, result[1].Id)
-	assert.Equal(t, "Camarão", result[1].Nome)
-	assert.Equal(t, "Laranja", result[1].Cor)
+	assert.Equal(t, "Ventilador", result[1].Nome)
+	assert.Equal(t, "Vermelho", result[1].Cor)
 	assert.Equal(t, 100.99, result[1].Preco)
 	assert.Equal(t, 5, result[1].Estoque)
 	assert.Equal(t, "AERQW", result[1].Codigo)
@@ -68,4 +68,18 @@ func TestUpdateNome(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, product, result)
 	assert.True(t, mockedStore.callingRead)
+}
+
+func TestDelete(t *testing.T) {
+	// ErrProdutoNaoEncontrado := errors.New("Produto não encontrado")
+	mockedStore := &mockStore{}
+	repo := repository.NewRepository(mockedStore)
+
+	err := repo.Delete(4)
+	assert.Error(t, err)
+	// assert.True(t, errors.Is(err, ErrProdutoNaoEncontrado))
+
+	err = repo.Delete(3)
+	assert.NoError(t, err)
+
 }
