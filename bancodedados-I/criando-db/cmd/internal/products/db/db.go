@@ -1,8 +1,6 @@
 package db
 
 import (
-	"fmt"
-
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -22,6 +20,4 @@ func init() {
 	if err = StorageDB.Ping(); err != nil {
 		panic(err)
 	}
-
-	fmt.Println("database config")
 }
