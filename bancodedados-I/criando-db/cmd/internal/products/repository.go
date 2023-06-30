@@ -13,10 +13,11 @@ var (
 	GetOneDB = "SELECT * FROM products WHERE id = ?"
 	UpdateDB = "UPDATE products SET name = ?, type = ?, count = ?, price = ? WHERE id = ?"
 	GetAllDB = "SELECT * FROM products"
+	DeleteDB = "DELETE FROM products WHERE id = ?"
 )
 
 type Repository interface {
-	Store(name, productType string, count int, price float64) (models.Product, error)
+	Store(product models.Product) (models.Product, error)
 	GetOne(id int) models.Product
 	Update(product models.Product) (models.Product, error)
 
@@ -104,4 +105,20 @@ func (r *repository) GetAll() ([]models.Product, error) {
 		products = append(products, product)
 	}
 	return products, nil
+}
+
+func (r *repository) Delete(id int) error {
+	db := db.StorageDB
+
+	stmt, err := db.Prepare(DeleteDB)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
