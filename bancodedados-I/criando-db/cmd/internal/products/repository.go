@@ -3,6 +3,7 @@ package products
 import (
 	"criando-db/cmd/internal/products/db"
 	"criando-db/cmd/internal/products/models"
+
 	"database/sql"
 	"log"
 )
