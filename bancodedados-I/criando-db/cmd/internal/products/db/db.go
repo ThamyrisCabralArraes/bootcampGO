@@ -11,7 +11,7 @@ var (
 )
 
 func init() {
-	dataSource := "root:password@tcp(localhost:3306)/storage"
+	dataSource := "root@tcp(localhost:3306)/storage"
 	var err error
 	StorageDB, err = sql.Open("mysql", dataSource)
 	if err != nil {

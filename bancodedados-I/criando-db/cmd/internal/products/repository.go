@@ -18,16 +18,19 @@ var (
 
 type Repository interface {
 	Store(product models.Product) (models.Product, error)
-	GetOne(id int) models.Product
+	GetOne(id int) (models.Product, error)
 	Update(product models.Product) (models.Product, error)
-
 	GetAll() ([]models.Product, error)
 	Delete(id int) error
 }
-type repository struct{}
+type repository struct {
+	db *sql.DB
+}
 
-func NewRepo() Repository {
-	return &repository{}
+func NewRepo(dbConn *sql.DB) Repository {
+	return &repository{
+		db: dbConn,
+	}
 }
 
 func (r *repository) Store(product models.Product) (models.Product, error) {
@@ -49,23 +52,23 @@ func (r *repository) Store(product models.Product) (models.Product, error) {
 	return product, nil
 }
 
-func (r *repository) GetOne(id int) models.Product {
+func (r *repository) GetOne(id int) (models.Product, error) {
 	var product models.Product
 	db := db.StorageDB
 
 	rows, err := db.Query(GetOneDB, id)
 	if err != nil {
 		log.Println(err)
-		return product
+		return product, err
 	}
 
 	for rows.Next() {
 		if err := rows.Scan(&product.ID, &product.Name, &product.Type, &product.Count, &product.Price); err != nil {
 			log.Println(err)
-			return product
+			return product, err
 		}
 	}
-	return product
+	return product, nil
 }
 
 func (r *repository) Update(product models.Product) (models.Product, error) {
