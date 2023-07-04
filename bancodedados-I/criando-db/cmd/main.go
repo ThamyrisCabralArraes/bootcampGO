@@ -2,12 +2,13 @@ package main
 
 import (
 	"criando-db/cmd/internal/products"
+	"criando-db/cmd/internal/products/db"
 	"criando-db/cmd/internal/products/models"
 	"fmt"
 )
 
 func main() {
-	db := products.NewRepo()
+	db := products.NewRepo(db.StorageDB)
 
 	product := models.Product{
 		Name:  "Produto 1",
